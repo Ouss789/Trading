@@ -1,0 +1,10 @@
+I want to:
+
+
+Analyze historical data (over the past 5 years, for example) to identify instances where the 200-day moving average (MA) and RSI conditions are met.
+
+Label the data: For those instances, check if the price went up (1) or not (0).
+
+print out the date of the price moved up and was a good decision
+
+Calculate the probability: Based on the current data (yesterday and today), check if the conditions hold true (price above 200-day MA, RSI conditions), and then calculate the probability of success (price going up).
