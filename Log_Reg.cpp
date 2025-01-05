@@ -70,3 +70,43 @@ double LogisticRegression::log_loss(std::vector<std::vector<double>>& A, std::ve
 
     return loss / len;
 }
+
+std::tuple<std::vector<std::vector<double>>, double> LogisticRegression::gradients(
+    const std::vector<std::vector<double>>& X,
+    const std::vector<std::vector<double>>& A,
+    std::vector<int>& y)
+{
+   
+    int rows = X.size();
+    int cols = X[0].size();
+
+    std::vector<std::vector<double>> X_t(cols, std::vector<double>(rows));
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            X_t[j][i] = X[i][j];
+        }
+    }
+
+    std::vector<std::vector<double>> dW(cols, std::vector<double>(1, 0.0));
+    std::vector<std::vector<double>> diff(rows, std::vector<double>(1, 0.0));
+    double db = 0.0;
+
+    int len = y.size();
+
+    
+    for (int i = 0; i < rows; ++i) {
+        diff[i][0] = A[i][0] - y[i];
+        db += diff[i][0];
+    }
+    db /= len; 
+
+    
+    for (size_t i = 0; i < cols; ++i) {
+        for (size_t k = 0; k < rows; ++k) {
+            dW[i][0] += X_t[i][k] * diff[k][0];
+        }
+        dW[i][0] /= len; 
+    }
+
+    return std::make_tuple(dW, db);
+}
