@@ -5,6 +5,11 @@
 #include <tuple>
 
 
+
+LogisticRegression::LogisticRegression(double learning_rate)
+    : learning_rate(learning_rate) {}
+
+
 std::vector<std::vector<double>> LogisticRegression::sigmoid(std::vector<std::vector<double>>& z) 
 {
     std::vector<std::vector<double>> result(z.size(), std::vector<double>(z[0].size()));
@@ -109,4 +114,19 @@ std::tuple<std::vector<std::vector<double>>, double> LogisticRegression::gradien
     }
 
     return std::make_tuple(dW, db);
+}
+
+std::tuple<std::vector<std::vector<double>>, double> LogisticRegression::update(std::vector<std::vector<double>>& dW, double& db, std::vector<std::vector<double>>& W, double& b)
+{
+    int rows = W.size();
+    int cols = W[0].size();
+
+    for (size_t i = 0; i < W.size(); ++i) {
+        for (size_t j = 0; j < W[i].size(); ++j) {
+            W[i][j] -= learning_rate * dW[i][j]; 
+        }
+    }
+    b -= learning_rate * db; 
+
+    return std::make_tuple(W,b);
 }

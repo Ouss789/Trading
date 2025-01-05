@@ -10,7 +10,7 @@
 int main()
 {
 
-    LogisticRegression fun;
+    LogisticRegression fun(10);
     
     std::vector<std::vector<double>> X = {
         {1.0, 2.0, 3.0},
@@ -82,6 +82,21 @@ int main()
 
     std::cout << "Bias gradient (db): " << db << std::endl;
 
+//-------------------------------------------------------------------------------------------//
+
+    for(int i=0; i<=10;i++){
+        auto result3 = fun.update(dW,db,W,b);
+        std::vector<std::vector<double>> W = std::get<0>(result2);
+        double b = std::get<1>(result2);
+        for (const auto& row : dW){
+            for (const auto& elem : row){
+                std::cout<< elem << " "; 
+            }
+        std::cout << std::endl;
+        }
+
+        std::cout << "Bias gradient (b): " << db << std::endl;
+    }
 
  
 }
